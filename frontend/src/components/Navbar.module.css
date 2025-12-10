@@ -1,0 +1,106 @@
+/* NAVBAR WRAPPER */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  /* Dark glass to match hero */
+  background: rgba(10, 15, 30, 0.96);
+  backdrop-filter: blur(14px);
+
+  /* REMOVE ANY BORDER LINE */
+  border-bottom: none;
+
+  /* Pull navbar 1px down to overlap any line below */
+  margin-bottom: -1px;
+}
+
+/* INNER CONTAINER */
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* BRAND NAME */
+.brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+}
+
+/* NAV LINKS CONTAINER */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* NORMAL LINKS */
+.link {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.3rem 0.45rem;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* SIGN IN BUTTON */
+.signIn {
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  transition: 0.22s ease;
+}
+
+.signIn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* SIGN UP BUTTON */
+.signUp {
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+  transition: 0.22s ease;
+}
+
+.signUp:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 17px 35px rgba(79, 70, 229, 0.55);
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 768px) {
+  .inner {
+    padding-inline: 1rem;
+  }
+  .links {
+    gap: 0.8rem;
+  }
+}
