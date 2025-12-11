@@ -1,4 +1,5 @@
 // path: src/pages/Signup.jsx
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,18 +10,58 @@ export default function Signup() {
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setError("");
-    if (!form.name || !form.email || !form.password) {
-      setError("Please fill required fields.");
-      return;
-    }
-    // TODO: call API to register
-    setTimeout(() => {
-      navigate("/login");
-    }, 600);
-  };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   if (!form.name || !form.email || !form.password) {
+  //     setError("Please fill required fields.");
+  //     return;
+  //   }
+  //   // TODO: call API to register
+  //   setTimeout(() => {
+  //     navigate("/login");
+  //   }, 600);
+  // };
+//   const onSubmit = async (e) => {
+//   e.preventDefault();
+//   setError("");
+
+//   if (!form.name || !form.email || !form.password) {
+//     setError("Please fill required fields.");
+//     return;
+//   }
+
+//   console.log("Submitting form:", form);
+
+//   try {
+//     const res = await axios.post(
+//       "http://localhost:5000/api/auth/register",
+//       form
+//     );
+//     console.log("Register success:", res.data);
+
+//     navigate("/login");
+//   } catch (err) {
+//     console.log("Error:", err.response?.data || err);
+//     setError(err.response?.data?.message || "Registration failed");
+//   }
+// };
+const onSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/register", form);
+
+    alert("Account created successfully! Please login.");
+
+    navigate("/login");
+  } catch (err) {
+    setError(err.response?.data?.message || "Registration failed");
+  }
+};
+
+
 
   return (
     <div className="auth-page">
