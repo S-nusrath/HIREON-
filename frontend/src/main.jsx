@@ -1,27 +1,65 @@
-// import React from 'react'
-// import { createRoot } from 'react-dom/client'
-// import { BrowserRouter } from 'react-router-dom'
-// import App from './App'
-// import './styles/global.css'
+// <<<<<<< HEAD
+// // import React from 'react'
+// // import { createRoot } from 'react-dom/client'
+// // import { BrowserRouter } from 'react-router-dom'
+// // import App from './App'
+// // import './styles/global.css'
 
-// ReactDOM.createRoot(document.getElementById('root')).render(
+// // ReactDOM.createRoot(document.getElementById('root')).render(
+// //   <React.StrictMode>
+// //     <BrowserRouter><App/></BrowserRouter>
+// //   </React.StrictMode>
+// // )
+
+
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import { BrowserRouter } from "react-router-dom";
+// import App from "./App";
+// import "./styles/global.css";
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
 //   <React.StrictMode>
-//     <BrowserRouter><App/></BrowserRouter>
+//     <BrowserRouter>
+//       <App />
+//     </BrowserRouter>
 //   </React.StrictMode>
-// )
+// );
+
+// =======
+// import "./index.css";
+// import "./App.css";
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import { BrowserRouter } from "react-router-dom";
+// import App from "./App";
+// import { AuthProvider } from "./context/AuthContext";
+
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <BrowserRouter>
+//     <AuthProvider>
+//       <App />
+//     </AuthProvider>
+//   </BrowserRouter>
+// );
+// >>>>>>> fedb49bfab430f0e2beb9a258bf02e69cff07fba
+
 
 
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
+
 import "./styles/global.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
-
