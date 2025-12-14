@@ -57,7 +57,7 @@
 //   .catch((err) => {
 //     console.error("DB sync error:", err);
 //   });
-import express from "express";
+/*import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { createServer } from "http";
@@ -109,4 +109,69 @@ const PORT = 5000;
 httpServer.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`🔥 Socket.io running on port ${PORT}`);
+});
+*/
+// Server.js
+// src/server.js
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import sequelize from "./config/database.js";
+
+// routes
+import authRoutes from "./routes/auth.routes.js";
+import jobRoutes from "./routes/job.routes.js";
+import bookmarkRoutes from "./routes/bookmarks.routes.js";
+
+dotenv.config();
+
+const app = express();
+
+// CORS: allow Vite frontend on 5173
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+// Mount API routes
+app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/bookmarks", bookmarkRoutes);
+
+// Default health route
+app.get("/", (req, res) => res.send("Server running"));
+
+// Create HTTP server & socket.io
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: { origin: "http://localhost:5173" },
+});
+
+io.on("connection", (socket) => {
+  console.log("🔥 New client connected:", socket.id);
+  socket.on("disconnect", () => console.log("❌ Client disconnected:", socket.id));
+});
+
+// DB connect + sync
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("MySQL Connected...");
+    await sequelize.sync();
+    console.log("Database synced!");
+  } catch (err) {
+    console.error("DB connection/sync error:", err);
+    process.exit(1);
+  }
+})();
+
+const PORT = process.env.PORT || 5000;
+httpServer.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
