@@ -40,58 +40,26 @@ export default function Navbar() {
   );
 }
 */
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  const { user, setUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/signin");
-  };
-
   return (
-    <header className="navbar-wrapper">
-      <nav className="navbar">
-        {/* LEFT */}
-        <Link to="/" className="navbar-logo">
-          HireOn
-        </Link>
+    <div className="navbar-wrapper">
+      <div className="navbar">
+        <Link to="/" className="navbar-logo">HireOn</Link>
 
-        {/* CENTER */}
         <div className="navbar-links">
           <Link to="/jobs">Jobs</Link>
+          <Link to="/resume">Resume</Link> {/* 👈 THIS */}
           <Link to="/practice">Practice</Link>
-          <Link to="/resume">Resume</Link>
         </div>
 
-        {/* RIGHT */}
         <div className="navbar-actions">
-          {!user ? (
-            <>
-              <Link to="/signin" className="nav-link">
-                Sign in
-              </Link>
-              <Link to="/signup" className="nav-btn">
-                Sign up
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/profile" className="nav-user">
-                {user.name}
-              </Link>
-              <button onClick={logout} className="nav-logout">
-                Logout
-              </button>
-            </>
-          )}
+          <Link to="/signin" className="nav-link">Sign in</Link>
+          <Link to="/signup" className="nav-btn">Sign up</Link>
+          
         </div>
-      </nav>
-    </header>
+      </div>
+    </div>
   );
 }

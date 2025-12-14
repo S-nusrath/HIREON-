@@ -302,3 +302,38 @@ body {
 .auth-card a:hover {
   text-decoration: underline;
 }
+/* AUTH PAGE POLISH */
+.auth-page {
+  padding: 32px 16px;
+}
+
+/* Left text spacing */
+.auth-hero h2 {
+  line-height: 1.2;
+}
+
+.auth-hero p {
+  max-width: 420px;
+}
+
+/* Card title spacing */
+.auth-card h3 {
+  margin-bottom: 4px;
+}
+
+/* Reduce form width feel */
+.auth-card {
+  max-width: 420px;
+  width: 100%;
+}
+
+/* Button hover */
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.45);
+}
+
+/* Smooth UI */
+* {
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+}

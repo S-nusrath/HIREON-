@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./Auth.css";
 
 export default function Signup() {
   const navigate = useNavigate();
