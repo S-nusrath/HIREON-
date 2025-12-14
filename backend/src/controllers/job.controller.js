@@ -45,11 +45,19 @@ import { getIO } from "../socket.js";
 
 export const createJob = async (req, res) => {
   try {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: "Job data is required" });
+    }
+
     const job = await Job.create(req.body);
 
-    // 🔔 Emit real-time event
-    const io = getIO();
-    io.emit("new-job", job);
+    // 🔔 Emit real-time event (SAFE)
+    try {
+      const io = getIO();
+      io.emit("new-job", job);
+    } catch (socketError) {
+      console.warn("⚠️ Socket not ready, skipping emit");
+    }
 
     return res.status(201).json({
       message: "Job created",

@@ -28,6 +28,8 @@
 // };
 
 
+// ADD THIS LINE AT TOP (optional but safe)
+console.log("📡 socket.js loaded");
 
 import { Server } from "socket.io";
 
