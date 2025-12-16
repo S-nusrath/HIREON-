@@ -40,9 +40,48 @@ export default function Navbar() {
   );
 }
 */
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import { useAuth } from "../context/AuthContext";
+
+// export default function Navbar() {
+//   return (
+//     <div className="navbar-wrapper">
+//       <div className="navbar">
+//         <Link to="/" className="navbar-logo">HireOn</Link>
+
+//         <div className="navbar-links">
+//           <Link to="/jobs">Jobs</Link>
+//           <Link to="/resume">Resume</Link> { 👈 THIS */}
+//           <Link to="/practice">Practice</Link>
+//           <Link to="/applications">My Applications</Link>
+
+//         </div>
+
+//         <div className="navbar-actions">
+//           <Link to="/signin" className="nav-link">Sign in</Link>
+//           <Link to="/signup" className="nav-btn">Sign up</Link>
+          
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { user, logout, loading } = useAuth();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/signin");
+  };
+
   return (
     <div className="navbar-wrapper">
       <div className="navbar">
@@ -50,14 +89,33 @@ export default function Navbar() {
 
         <div className="navbar-links">
           <Link to="/jobs">Jobs</Link>
-          <Link to="/resume">Resume</Link> {/* 👈 THIS */}
+          <Link to="/resume">Resume</Link>
           <Link to="/practice">Practice</Link>
+{!loading && user && (
+  <Link to="/applications">My Applications</Link>
+)}
+
+  
         </div>
 
         <div className="navbar-actions">
-          <Link to="/signin" className="nav-link">Sign in</Link>
-          <Link to="/signup" className="nav-btn">Sign up</Link>
-          
+          {/* ❌ NOT logged in */}
+          {!user && (
+            <>
+              <Link to="/signin" className="nav-link">Sign in</Link>
+              <Link to="/signup" className="nav-btn">Sign up</Link>
+            </>
+          )}
+
+          {/* ✅ logged in */}
+          {user && (
+            <>
+              <span className="nav-user">Hi, {user.name}</span>
+              <button onClick={handleLogout} className="nav-btn">
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

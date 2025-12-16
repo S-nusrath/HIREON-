@@ -44,6 +44,8 @@ import ResumeBuilder from "./pages/ResumeBuilder";
 import SignIn from "./pages/Login";
 import SignUp from "./pages/Signup";
 import Profile from "./pages/Profile";
+import MyApplications from "./pages/MyApplications";
+import JobDetail from "./pages/JobDetail";
 
 
 function App() {
@@ -73,6 +75,8 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/applications" element={<MyApplications />} />
+        <Route path="/jobs/:id" element={<JobDetail />} />
       </Routes>
     </>
   );
