@@ -19,7 +19,7 @@ import SignUp from "./pages/Signup";
 import Profile from "./pages/Profile";
 import MyApplications from "./pages/MyApplications";
 import JobDetail from "./pages/JobDetail";
-
+import AdminMyJobs from "./pages/AdminMyJobs";
 
 function App() {
   const { user, loading } = useAuth();
@@ -61,6 +61,15 @@ function App() {
       : <Navigate to="/" />
   }
 />
+<Route
+  path="/admin/my-jobs"
+  element={
+    !loading && user?.role === "admin"
+      ? <AdminMyJobs/>
+      : <Navigate to="/" />
+  }
+/>
+
 
       </Routes>
     </>

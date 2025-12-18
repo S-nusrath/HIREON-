@@ -24,7 +24,10 @@ export default function Navbar() {
   <Link to="/applications">My Applications</Link>
 )}
 {user?.role === "admin" && (
-  <Link to="/admin/jobs">Post Job</Link>
+  <>
+    <Link to="/admin/jobs">Post Job</Link>
+    <Link to="/admin/my-jobs">My Jobs</Link>
+  </>
 )}
 
   
