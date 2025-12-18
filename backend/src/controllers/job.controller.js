@@ -34,12 +34,12 @@ import { getIO } from "../socket.js";
 export const createJob = async (req, res) => {
   try {
     if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Admin only" });
+      return res.status(403).json({ message: "Admins only" });
     }
 
     const job = await Job.create({
       ...req.body,
-      createdBy: req.user.id, // optional but recommended
+      postedBy: req.user.id, // optional but recommended
     });
 
     try {
@@ -74,3 +74,15 @@ export const getJob = async (req, res) => {
     res.status(500).json({ message: "Error", error: err.message });
   }
 };
+
+export const getMyPostedJobs = async (req, res) => {
+  try {
+    const jobs = await Job.findAll({
+      where: { postedBy: req.user.id },
+    });
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
