@@ -41,23 +41,56 @@ export default function Navbar() {
 }
 */
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { user, logout } = useContext(AuthContext);
+
   return (
     <div className="navbar-wrapper">
       <div className="navbar">
-        <Link to="/" className="navbar-logo">HireOn</Link>
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          HireOn
+        </Link>
 
+        {/* Center Links */}
         <div className="navbar-links">
           <Link to="/jobs">Jobs</Link>
-          <Link to="/resume">Resume</Link> {/* 👈 THIS */}
+          <Link to="/resume">Resume</Link>
           <Link to="/practice">Practice</Link>
+
+          {user && (
+            <>
+              <Link to="/discover">Discover</Link>
+              <Link to="/requests">Requests</Link>
+              <Link to="/connections">Connections</Link>
+            </>
+          )}
         </div>
 
+        {/* Right Actions */}
         <div className="navbar-actions">
-          <Link to="/signin" className="nav-link">Sign in</Link>
-          <Link to="/signup" className="nav-btn">Sign up</Link>
-          
+          {user ? (
+            <>
+              <Link to="/profile" className="nav-link">
+                {user.name}
+              </Link>
+              <button onClick={logout} className="nav-btn">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/signin" className="nav-link">
+                Sign in
+              </Link>
+              <Link to="/signup" className="nav-btn">
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

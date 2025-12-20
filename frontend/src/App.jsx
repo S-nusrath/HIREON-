@@ -163,9 +163,12 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
 import Practice from "./pages/Practice";
+import Profile from "./pages/Profile";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import SignIn from "./pages/Login";
 import SignUp from "./pages/Signup";
+import DiscoverUsers from "./pages/DiscoverUsers";
+import ConnectionRequests from "./pages/ConnectionRequests";
 
 function App() {
   return (
@@ -176,9 +179,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/practice" element={<Practice />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/resume" element={<ResumeBuilder />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/discover" element={<DiscoverUsers />} />
+        <Route path="/requests" element={<ConnectionRequests />} />
       </Routes>
     </>
   );
