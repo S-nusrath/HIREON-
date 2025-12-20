@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import axios from "axios";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       setLoading(false);
       return;
@@ -25,10 +26,25 @@ export function AuthProvider({ children }) {
       })
       .finally(() => setLoading(false));
   }, []);
+// ✅ LOGOUT FUNCTION
+const logout = () => {
+  localStorage.removeItem("token"); // remove token
+  setUser(null); // reset user state
+};
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
+  {children}
+</AuthContext.Provider>
+
   );
+}
+
+/* ✅ ONLY ONE useAuth — THIS IS IMPORTANT */
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+  return context;
 }

@@ -10,12 +10,14 @@ export default function Signup() {
   const { setUser } = useContext(AuthContext);
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    branch: "CS",
-    year: "1",
-  });
+  name: "",
+  email: "",
+  password: "",
+  branch: "CS",
+  year: "1",
+  role: "User",
+});
+
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -137,6 +139,18 @@ export default function Signup() {
                 </div>
               </div>
             </div>
+<div className="form-field">
+  <label htmlFor="role">Account Type</label>
+  <select
+    id="role"
+    name="role"
+    value={form.role}
+    onChange={onChange}
+  >
+    <option value="User">Login as User</option>
+    <option value="admin">Login as Admin</option>
+  </select>
+</div>
 
             <div className="form-field">
               <label htmlFor="password">Password</label>

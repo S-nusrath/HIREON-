@@ -1,32 +1,17 @@
-/*import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
-  const { user } = useContext(AuthContext);
+  const { user, logout, loading } = useAuth();
 
-  return (
-    <nav
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "14px 40px",
-        background: "rgba(10,15,30,0.8)",
-        backdropFilter: "blur(10px)",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-      }}
-    >
-      <Link to="/" style={{ fontWeight: 800, fontSize: 20 }}>
-        HireOn
-      </Link>
+  const navigate = useNavigate();
 
-      <div style={{ display: "flex", gap: 18 }}>
-        <Link to="/jobs">Jobs</Link>
-        <Link to="/practice">Practice</Link>
+  const handleLogout = () => {
+    logout();
+    navigate("/signin");
+  };
 
+<<<<<<< HEAD
         {user ? (
           <Link to="/profile">{user.name}</Link>
         ) : (
@@ -47,6 +32,8 @@ import { AuthContext } from "../context/AuthContext";
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
 
+=======
+>>>>>>> dbf9f0a26092fecf38171284619372168d03710f
   return (
     <div className="navbar-wrapper">
       <div className="navbar">
@@ -60,6 +47,7 @@ export default function Navbar() {
           <Link to="/jobs">Jobs</Link>
           <Link to="/resume">Resume</Link>
           <Link to="/practice">Practice</Link>
+<<<<<<< HEAD
 
           {user && (
             <>
@@ -68,10 +56,24 @@ export default function Navbar() {
               <Link to="/connections">Connections</Link>
             </>
           )}
+=======
+{!loading && user && (
+  <Link to="/applications">My Applications</Link>
+)}
+{user?.role === "admin" && (
+  <>
+    <Link to="/admin/jobs">Post Job</Link>
+    <Link to="/admin/my-jobs">My Jobs</Link>
+  </>
+)}
+
+  
+>>>>>>> dbf9f0a26092fecf38171284619372168d03710f
         </div>
 
         {/* Right Actions */}
         <div className="navbar-actions">
+<<<<<<< HEAD
           {user ? (
             <>
               <Link to="/profile" className="nav-link">
@@ -90,6 +92,24 @@ export default function Navbar() {
                 Sign up
               </Link>
             </>
+=======
+          {/* ❌ NOT logged in */}
+          {!user && (
+            <>
+              <Link to="/signin" className="nav-link">Sign in</Link>
+              <Link to="/signup" className="nav-btn">Sign up</Link>
+            </>
+          )}
+
+          {/* ✅ logged in */}
+          {user && (
+            <>
+              <span className="nav-user">Hi, {user.name}</span>
+              <button onClick={handleLogout} className="nav-btn">
+                Logout
+              </button>
+            </>
+>>>>>>> dbf9f0a26092fecf38171284619372168d03710f
           )}
         </div>
       </div>
