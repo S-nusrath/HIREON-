@@ -312,6 +312,7 @@ import dotenv from "dotenv";
 import http from "http";
 import sequelize from "./config/database.js";
 import { initSocket } from "./socket.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 
 // Load models
@@ -343,6 +344,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
+app.use("/api/applications", applicationRoutes);
 
 // Health check
 app.get("/", (req, res) => {
