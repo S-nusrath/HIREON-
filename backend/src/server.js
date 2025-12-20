@@ -306,12 +306,13 @@
 
 
 
-import express from "express";
+/*import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
 import sequelize from "./config/database.js";
 import { initSocket } from "./socket.js";
+
 
 // Load models
 import "./models/User.js";
@@ -368,6 +369,81 @@ initSocket(server);
 })();
 
 // Start server
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🔥 Socket.io running on port ${PORT}`);
+});
+*/
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import http from "http";
+import sequelize from "./config/database.js";
+import { initSocket } from "./socket.js";
+
+// ✅ Load models
+import "./models/User.js";
+import "./models/Job.js";
+import "./models/Bookmark.js";
+import "./models/connection.model.js";
+import "./models/connectionRequest.model.js";
+
+// ✅ Routes
+import authRoutes from "./routes/auth.routes.js";
+import jobRoutes from "./routes/job.routes.js";
+import bookmarkRoutes from "./routes/bookmarks.routes.js";
+import connectionRoutes from "./routes/connection.routes.js"; // ⭐ ADD THIS
+import userRoutes from "./routes/user.routes.js";
+
+
+dotenv.config();
+
+const app = express();
+
+// ✅ CORS
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ API Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/bookmarks", bookmarkRoutes);
+app.use("/api/connections", connectionRoutes); // ⭐ ADD THIS
+app.use("/api/users", userRoutes);
+
+// ✅ Health check
+app.get("/", (req, res) => {
+  res.send("🚀 HireOn backend running");
+});
+
+// ✅ Create HTTP server
+const server = http.createServer(app);
+
+// ✅ Initialize Socket.IO
+initSocket(server);
+
+// ✅ DB connect & sync
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ MySQL Connected...");
+    await sequelize.sync();
+    console.log("✅ Database synced!");
+  } catch (err) {
+    console.error("❌ DB error:", err);
+    process.exit(1);
+  }
+})();
+
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
