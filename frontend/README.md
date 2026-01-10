@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -15,7 +14,3 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# HIREON-
-Hireon is a smart career platform that provides real time job listings with filters,alerts,bookmarking,a skill gap analyzer,practice arena,resume builder,leaderboards and video-call support to help students find jobs and improve their skills easily
->>>>>>> e4010509d832b5e2fe60a99f4862e9f8acbb819a
