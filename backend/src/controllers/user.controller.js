@@ -1,4 +1,4 @@
-import db from "../models/index.js";
+/*import db from "../models/index.js";
 
 const { users } = db;
 
@@ -23,4 +23,18 @@ const getAllUsers = async (req, res) => {
 
 export default {
   getAllUsers,
+};*/
+import db from "../models/index.js";
+const { users } = db;
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const list = await users.findAll({
+      attributes: ["id", "name", "email"],
+    });
+    res.json(list);
+  } catch (err) {
+    console.error("GET USERS ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
