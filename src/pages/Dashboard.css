@@ -1,0 +1,80 @@
+/* .dashboard-title {
+  font-size: 26px;
+  margin-bottom: 24px;
+}
+
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.card-purple {
+  background: #efe7ff;
+}
+
+.primary-btn,
+.secondary-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 12px;
+}
+
+.job-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+} */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.empty-state {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.progress-bar {
+  background: #eee;
+  height: 8px;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #6c63ff;
+  border-radius: 6px;
+}
+
+.activity-list {
+  padding-left: 16px;
+}

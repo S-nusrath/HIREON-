@@ -1,0 +1,85 @@
+.navbar-wrapper {
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.navbar {
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.navbar-logo {
+  font-size: 22px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #000;
+}
+
+/* Search */
+.navbar-search input {
+  width: 360px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+/* Actions */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  font-size: 18px;
+  text-decoration: none;
+}
+
+/* Auth buttons */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* User */
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e9ddff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.user-name {
+  font-size: 14px;
+}
+
+.logout-btn {
+  border: none;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+}
