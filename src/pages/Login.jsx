@@ -1,70 +1,65 @@
+// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import "./Auth.css";
 
 export default function Login() {
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const onChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
-    try {
-      setLoading(true);
-
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/signin",
-        form
-      );
-
-      login(res.data.user, res.data.token);
-      navigate("/profile");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
+    login({
+      id: Date.now(),
+      name: email.split("@")[0],
+      email,
+      role: "Job Seeker",
+    });
   };
 
   return (
     <div className="auth-page">
-      <form onSubmit={onSubmit} className="auth-card">
-        <h3>Sign in</h3>
-
-        <input
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={onChange}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={onChange}
-        />
-
-        {error && <p className="form-error">{error}</p>}
-
-        <button disabled={loading}>
-          {loading ? "Signing in..." : "Sign in"}
-        </button>
-
+      <div className="auth-left">
+        <h1>HireOn</h1>
         <p>
-          No account? <Link to="/signup">Create one</Link>
+          Find jobs, connect with professionals, and build your career — all in
+          one platform.
         </p>
-      </form>
+      </div>
+
+      <div className="auth-card">
+        <h2>Welcome back</h2>
+        <p className="auth-sub">Sign in to your account</p>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button type="submit" className="primary-btn">
+            Sign in
+          </button>
+        </form>
+
+        <p className="auth-footer">
+          Don’t have an account? <Link to="/signup">Create one</Link>
+        </p>
+      </div>
     </div>
   );
 }
