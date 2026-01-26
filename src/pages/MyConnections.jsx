@@ -20,47 +20,94 @@ export default function MyConnections() {
   );
 }
 */
-import { useEffect, useState } from "react";
-import "./MyConnections.css";
+// import { useEffect, useState } from "react";
+// import "./MyConnections.css";
 
-const MyConnections = () => {
-  const [connections, setConnections] = useState([]);
-  const token = localStorage.getItem("token");
+// const MyConnections = () => {
+//   const [connections, setConnections] = useState([]);
+//   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/connections", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
-      .then(data => setConnections(data));
-  }, []);
+//   useEffect(() => {
+//     fetch("http://localhost:5000/api/connections", {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     })
+//       .then(res => res.json())
+//       .then(data => setConnections(data));
+//   }, []);
+
+//   return (
+//     <div className="connections-page">
+//       <h1 className="page-title">My Connections</h1>
+
+//       {connections.length === 0 ? (
+//         <p className="empty-text">You don’t have any connections yet.</p>
+//       ) : (
+//         <div className="connections-grid">
+//           {connections.map((conn) => (
+//             <div className="connection-card" key={conn.id}>
+//               <div className="avatar">
+//                 {conn.name?.charAt(0) || "U"}
+//               </div>
+
+//               <h3>{conn.name || "User"}</h3>
+//               <p>{conn.email || "user@email.com"}</p>
+
+//               <span className="badge">Connected</span>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default MyConnections;
+// import { useAuth } from "../context/AuthContext";
+
+// export default function MyConnections() {
+//   const { user } = useAuth();
+
+//   return (
+//     <div style={{ padding: 20 }}>
+//       <h2>My Connections</h2>
+
+//       {user.connections?.length === 0 && <p>No connections yet</p>}
+
+//       {user.connections?.map((c) => (
+//         <p key={c.id}>👤 {c.name}</p>
+//       ))}
+//     </div>
+//   );
+// }
+
+import { useAuth } from "../context/AuthContext";
+
+export default function Connections() {
+  const { user } = useAuth();
+
+  const connections = user?.connections || [];
 
   return (
-    <div className="connections-page">
-      <h1 className="page-title">My Connections</h1>
+    <div style={{ padding: 20 }}>
+      <h2>My Connections</h2>
 
-      {connections.length === 0 ? (
-        <p className="empty-text">You don’t have any connections yet.</p>
-      ) : (
-        <div className="connections-grid">
-          {connections.map((conn) => (
-            <div className="connection-card" key={conn.id}>
-              <div className="avatar">
-                {conn.name?.charAt(0) || "U"}
-              </div>
+      {connections.length === 0 && <p>No connections yet</p>}
 
-              <h3>{conn.name || "User"}</h3>
-              <p>{conn.email || "user@email.com"}</p>
-
-              <span className="badge">Connected</span>
-            </div>
-          ))}
+      {connections.map((c) => (
+        <div
+          key={`${c.email}-${c.name}`}
+          style={{
+            marginBottom: 8,
+            padding: 8,
+            border: "1px solid #ccc",
+            borderRadius: 6,
+          }}
+        >
+          {c.name}
         </div>
-      )}
+      ))}
     </div>
   );
-};
-
-export default MyConnections;
+}

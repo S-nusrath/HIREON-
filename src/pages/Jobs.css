@@ -1,98 +1,33 @@
-.page-title {
-  margin-bottom: 20px;
+* .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.jobs-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* JOB CARD */
-.job-card {
-  display: flex;
-  justify-content: space-between;
-  background: #0f1538;
+.modal-box {
+  background: #111;
   padding: 20px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.job-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.job-title {
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-
-.job-company {
-  color: #c7c9ff;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.job-meta {
-  font-size: 14px;
-  color: #aab0ff;
-  margin-bottom: 12px;
-}
-
-.job-skills {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.job-skills span {
-  background: rgba(90, 85, 255, 0.15);
-  color: #9aa0ff;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-}
-
-.job-time {
-  font-size: 12px;
-  color: #8b90ff;
-}
-
-/* ACTIONS */
-.job-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
-}
-
-.view-btn {
-  color: #9aa0ff;
-  font-size: 14px;
-}
-
-.save-btn {
-  background: transparent;
-  border: 1px solid #5a55ff;
-  color: #5a55ff;
-  padding: 6px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.apply-btn {
-  background: #5a55ff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
   color: #fff;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
 }
 
-.apply-btn:hover {
-  background: #4b47e0;
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -201,3 +201,17 @@ int main() {
     </div>
   );
 }
+const handleRun = async () => {
+  setLoading(true);
+  setOutput("Running...");
+
+  const result = await runCode(code, input);
+
+  if (result?.success) {
+    setOutput(result.output);
+  } else {
+    setOutput(result?.error || "Unknown error");
+  }
+
+  setLoading(false);
+};

@@ -219,6 +219,35 @@
 //     </div>
 //   );
 // }
+// import { useParams } from "react-router-dom";
+// import jobs from "../data/jobs";
+// import DashboardLayout from "../layout/DashboardLayout";
+
+// export default function JobDetail() {
+//   const { id } = useParams();
+//   const job = jobs.find((j) => j.id === id);
+
+//   if (!job) return <p>Job not found</p>;
+
+//   return (
+//     <DashboardLayout>
+//       <h2>{job.title}</h2>
+//       <p>{job.company} • {job.location}</p>
+
+//       <p>{job.salary} • {job.experience}</p>
+
+//       <h3>Description</h3>
+//       <p>{job.description}</p>
+
+//       <h3>Skills</h3>
+//       <ul>
+//         {job.skills.map((s) => (
+//           <li key={s}>{s}</li>
+//         ))}
+//       </ul>
+//     </DashboardLayout>
+//   );
+// }
 import { useParams } from "react-router-dom";
 import jobs from "../data/jobs";
 import DashboardLayout from "../layout/DashboardLayout";
@@ -229,12 +258,77 @@ export default function JobDetail() {
 
   if (!job) return <p>Job not found</p>;
 
+  // 🔹 Apply Job
+  const handleApply = () => {
+    const appliedJobs =
+      JSON.parse(localStorage.getItem("hireon_applied_jobs")) || [];
+
+    const alreadyApplied = appliedJobs.some((j) => j.id === job.id);
+    if (alreadyApplied) {
+      alert("You have already applied for this job ✅");
+      return;
+    }
+
+    const confirmApply = window.confirm(
+      `Apply for ${job.title} at ${job.company}?`
+    );
+
+    if (confirmApply) {
+      localStorage.setItem(
+        "hireon_applied_jobs",
+        JSON.stringify([...appliedJobs, job])
+      );
+      alert("🎉 Application submitted successfully!");
+    }
+  };
+
+  // 🔹 Save Job
+  const handleSave = () => {
+    const savedJobs =
+      JSON.parse(localStorage.getItem("hireon_saved_jobs")) || [];
+
+    const alreadySaved = savedJobs.some((j) => j.id === job.id);
+    if (alreadySaved) {
+      alert("Job already saved ⭐");
+      return;
+    }
+
+    const confirmSave = window.confirm(
+      `Save ${job.title} for later?`
+    );
+
+    if (confirmSave) {
+      localStorage.setItem(
+        "hireon_saved_jobs",
+        JSON.stringify([...savedJobs, job])
+      );
+      alert("⭐ Job saved successfully!");
+    }
+  };
+
   return (
     <DashboardLayout>
       <h2>{job.title}</h2>
-      <p>{job.company} • {job.location}</p>
+      <p>
+        {job.company} • {job.location}
+      </p>
 
-      <p>{job.salary} • {job.experience}</p>
+      <p>
+        {job.salary} • {job.experience}
+      </p>
+
+      {/* ACTION BUTTONS */}
+      <div style={{ display: "flex", gap: 10, marginTop: 15 }}>
+        <button onClick={handleApply} className="primary-btn">
+          Apply
+        </button>
+
+        <button onClick={handleSave} className="secondary-btn">
+          Save
+        </button>
+      </div>
+
+      <hr style={{ margin: "20px 0" }} />
 
       <h3>Description</h3>
       <p>{job.description}</p>

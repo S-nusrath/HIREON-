@@ -297,13 +297,245 @@
 //     </DashboardLayout>
 //   );
 // }
+// 
+// import { useNavigate } from "react-router-dom";
+
+// import DashboardLayout from "../layout/DashboardLayout";
+// import StatsCards from "../components/StatsCards";
+
+// import "./Dashboard.css";
+
+// export default function Dashboard() {
+
+//   const navigate = useNavigate();   // ✅ ADD THIS
+
+//   return (
+//     <DashboardLayout>
+
+//       {/* PAGE HEADER */}
+//       <div className="dashboard-header">
+//         <div className="header-left">
+//           <img
+//             src="https://i.pravatar.cc/100?img=12"
+//             alt="User"
+//             className="header-avatar"
+//           />
+//           <div>
+//             <h2>Welcome back, Rehan 👋</h2>
+//             <p className="header-sub">
+//               Here’s an overview of your activity today
+//             </p>
+//           </div>
+//         </div>
+
+//         <button className="primary-btn">Complete Profile</button>
+//       </div>
+
+//       {/* STATS */}
+//       <div className="stats-grid">
+//         <div className="stat-card">
+//           <h3>12</h3>
+//           <p>Jobs Applied</p>
+//         </div>
+//         <div className="stat-card">
+//           <h3>8</h3>
+//           <p>Connections</p>
+//         </div>
+//         <div className="stat-card">
+//           <h3>3</h3>
+//           <p>Pending Requests</p>
+//         </div>
+//         <div className="stat-card">
+//           <h3>5</h3>
+//           <p>Practice Sessions</p>
+//         </div>
+//       </div>
+
+//       {/* HERO ACTIONS */}
+//       <div className="hero-grid">
+
+//         {/* Browse Jobs */}
+//         <div className="hero-card primary-hero">
+//           <div>
+//             <h3>Find your next opportunity</h3>
+//             <p>Jobs curated based on your skills & interests</p>
+
+//             <button
+//               className="primary-btn"
+//               onClick={() => navigate("/jobs")}   // ✅
+//             >
+//               Browse Jobs
+//             </button>
+//           </div>
+
+//           <img
+//             src="https://illustrations.popsy.co/indigo/job-search.svg"
+//             alt="Jobs"
+//           />
+//         </div>
+
+//         {/* Discover People */}
+//         <div className="hero-card">
+//           <div>
+//             <h3>Grow your professional network</h3>
+//             <p>Connect with people in your domain</p>
+
+//             <button
+//               className="secondary-btn"
+//               onClick={() => navigate("/discover")}   // ✅
+//             >
+//               Discover People
+//             </button>
+//           </div>
+
+//           <img
+//             src="https://illustrations.popsy.co/gray/team-work.svg"
+//             alt="People"
+//           />
+//         </div>
+
+//       </div>
+
+//       {/* MAIN GRID */}
+//       <div className="dashboard-grid">
+
+//         {/* LEFT */}
+//         <div>
+//           <h3 className="section-title">Recommended Jobs</h3>
+
+//           <div className="job-card">
+//             <div className="job-header">
+//               <img
+//                 src="https://logo.clearbit.com/google.com"
+//                 alt="Company"
+//               />
+//               <div>
+//                 <h4>Frontend Intern</h4>
+//                 <p>Startup Labs • Remote</p>
+//               </div>
+//             </div>
+
+//             <span>React • JavaScript</span>
+
+//             <button
+//               className="primary-btn small"
+//               onClick={() => navigate("/jobs")}   // ✅
+//             >
+//               View Job
+//             </button>
+//           </div>
+
+//           <div className="job-card">
+//             <div className="job-header">
+//               <img
+//                 src="https://logo.clearbit.com/amazon.com"
+//                 alt="Company"
+//               />
+//               <div>
+//                 <h4>React Developer</h4>
+//                 <p>TechNova • Bengaluru</p>
+//               </div>
+//             </div>
+
+//             <span>React • CSS</span>
+
+//             <button
+//               className="primary-btn small"
+//               onClick={() => navigate("/jobs")}   // ✅
+//             >
+//               View Job
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* RIGHT */}
+//         <div>
+
+//           <div className="card">
+//             <h3>Notifications</h3>
+//             <ul className="activity-list">
+//               <li>🔥 2 new jobs match your profile</li>
+//               <li>👤 1 new connection request</li>
+//               <li>📩 Recruiter viewed your profile</li>
+//             </ul>
+//           </div>
+
+//           <div className="card">
+//             <h3>Profile Completion</h3>
+
+//             <div className="progress-bar">
+//               <div
+//                 className="progress-fill"
+//                 style={{ width: "65%" }}
+//               />
+//             </div>
+
+//             <p>65% completed</p>
+//           </div>
+
+//           <div className="card">
+//             <h3>People you may know</h3>
+
+//             <div className="people-item">
+//               <img src="https://i.pravatar.cc/40?img=32" />
+//               <div>
+//                 <p>Sk.Rehan</p>
+//                 <span>Frontend Developer</span>
+//               </div>
+
+//               <button
+//                 className="secondary-btn small"
+//                 onClick={() => navigate("/discover")}   // ✅
+//               >
+//                 Connect
+//               </button>
+//             </div>
+
+//             <div className="people-item">
+//               <img src="https://i.pravatar.cc/40?img=45" />
+//               <div>
+//                 <p>Nusrath</p>
+//                 <span>Backend Intern</span>
+//               </div>
+
+//               <button
+//                 className="secondary-btn small"
+//                 onClick={() => navigate("/discover")}   // ✅
+//               >
+//                 Connect
+//               </button>
+//             </div>
+
+//           </div>
+
+//         </div>
+
+//       </div>
+
+//     </DashboardLayout>
+//   );
+// }
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 import DashboardLayout from "../layout/DashboardLayout";
 import "./Dashboard.css";
 
 export default function Dashboard() {
+
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // ✅ REAL COUNTS
+  const jobsApplied = user?.appliedJobs?.length || 0;
+  const connections = user?.connections?.length || 0;
+  const requests = user?.requests?.length || 0;
+  const practice = user?.practiceSessions || 0;
+
   return (
     <DashboardLayout>
-      {/* PAGE HEADER */}
+
+      {/* HEADER */}
       <div className="dashboard-header">
         <div className="header-left">
           <img
@@ -312,44 +544,59 @@ export default function Dashboard() {
             className="header-avatar"
           />
           <div>
-            <h2>Welcome back, Rehan 👋</h2>
+            <h2>Welcome back, {user?.name} 👋</h2>
             <p className="header-sub">
               Here’s an overview of your activity today
             </p>
           </div>
         </div>
 
-        <button className="primary-btn">Complete Profile</button>
+        <button className="primary-btn">
+          Complete Profile
+        </button>
       </div>
 
       {/* STATS */}
       <div className="stats-grid">
+
         <div className="stat-card">
-          <h3>12</h3>
+          <h3>{jobsApplied}</h3>
           <p>Jobs Applied</p>
         </div>
+
         <div className="stat-card">
-          <h3>8</h3>
+          <h3>{connections}</h3>
           <p>Connections</p>
         </div>
+
         <div className="stat-card">
-          <h3>3</h3>
+          <h3>{requests}</h3>
           <p>Pending Requests</p>
         </div>
+
         <div className="stat-card">
-          <h3>5</h3>
+          <h3>{practice}</h3>
           <p>Practice Sessions</p>
         </div>
+
       </div>
 
       {/* HERO ACTIONS */}
       <div className="hero-grid">
+
         <div className="hero-card primary-hero">
           <div>
             <h3>Find your next opportunity</h3>
             <p>Jobs curated based on your skills & interests</p>
-            <button className="primary-btn">Browse Jobs</button>
+
+            <button
+              className="primary-btn"
+              onClick={() => navigate("/jobs")}
+            >
+              Browse Jobs
+            </button>
           </div>
+
           <img
             src="https://illustrations.popsy.co/indigo/job-search.svg"
             alt="Jobs"
@@ -360,97 +607,72 @@ export default function Dashboard() {
           <div>
             <h3>Grow your professional network</h3>
             <p>Connect with people in your domain</p>
-            <button className="secondary-btn">Discover People</button>
+
+            <button
+              className="secondary-btn"
+              onClick={() => navigate("/discover")}
+            >
+              Discover People
+            </button>
           </div>
+
           <img
             src="https://illustrations.popsy.co/gray/team-work.svg"
             alt="People"
           />
         </div>
+
       </div>
 
-      {/* MAIN GRID */}
+      {/* RECOMMENDED JOBS */}
       <div className="dashboard-grid">
-        {/* LEFT */}
+
         <div>
+
           <h3 className="section-title">Recommended Jobs</h3>
 
           <div className="job-card">
-            <div className="job-header">
-              <img
-                src="https://logo.clearbit.com/google.com"
-                alt="Company"
-              />
-              <div>
-                <h4>Frontend Intern</h4>
-                <p>Startup Labs • Remote</p>
-              </div>
-            </div>
-            <span>React • JavaScript</span>
-            <button className="primary-btn small">View Job</button>
+            <h4>Frontend Intern</h4>
+            <p>Startup Labs • Remote</p>
+
+            <button
+              className="primary-btn small"
+              onClick={() => navigate("/jobs")}
+            >
+              View Job
+            </button>
           </div>
 
           <div className="job-card">
-            <div className="job-header">
-              <img
-                src="https://logo.clearbit.com/amazon.com"
-                alt="Company"
-              />
-              <div>
-                <h4>React Developer</h4>
-                <p>TechNova • Bengaluru</p>
-              </div>
-            </div>
-            <span>React • CSS</span>
-            <button className="primary-btn small">View Job</button>
+            <h4>React Developer</h4>
+            <p>TechNova • Bengaluru</p>
+
+            <button
+              className="primary-btn small"
+              onClick={() => navigate("/jobs")}
+            >
+              View Job
+            </button>
           </div>
+
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT SIDE */}
         <div>
+
           <div className="card">
             <h3>Notifications</h3>
             <ul className="activity-list">
-              <li>🔥 2 new jobs match your profile</li>
-              <li>👤 1 new connection request</li>
-              <li>📩 Recruiter viewed your profile</li>
+              <li>🔥 {requests} new connection requests</li>
+              <li>📌 {jobsApplied} jobs applied</li>
             </ul>
           </div>
 
-          <div className="card">
-            <h3>Profile Completion</h3>
-            <div className="progress-bar">
-              <div
-                className="progress-fill"
-                style={{ width: "65%" }}
-              />
-            </div>
-            <p>65% completed</p>
-          </div>
-
-          <div className="card">
-            <h3>People you may know</h3>
-
-            <div className="people-item">
-              <img src="https://i.pravatar.cc/40?img=32" />
-              <div>
-                <p>Sk.Rehan</p>
-                <span>Frontend Developer</span>
-              </div>
-              <button className="secondary-btn small">Connect</button>
-            </div>
-
-            <div className="people-item">
-              <img src="https://i.pravatar.cc/40?img=45" />
-              <div>
-                <p>Nusrath rehan</p>
-                <span>Backend Intern</span>
-              </div>
-              <button className="secondary-btn small">Connect</button>
-            </div>
-          </div>
         </div>
+
       </div>
+
     </DashboardLayout>
   );
 }
+
