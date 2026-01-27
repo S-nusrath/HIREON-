@@ -82,22 +82,82 @@ export default function MyConnections() {
 //   );
 // }
 
+// import { useAuth } from "../context/AuthContext";
+
+// export default function Connections() {
+//   const { user } = useAuth();
+
+//   const connections = user?.connections || [];
+
+//   return (
+//     <div style={{ padding: 20 }}>
+//       <h2>My Connections</h2>
+
+//       {connections.length === 0 && <p>No connections yet</p>}
+
+//       {connections.map((c) => (
+//         <div
+//           key={`${c.email}-${c.name}`}
+//           style={{
+//             marginBottom: 8,
+//             padding: 8,
+//             border: "1px solid #ccc",
+//             borderRadius: 6,
+//           }}
+//         >
+//           {c.name}
+//         </div>
+//       ))}
+//     </div>
+//   );
+//}
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Connections() {
   const { user } = useAuth();
+  const [connections, setConnections] = useState([]);
 
-  const connections = user?.connections || [];
+  const loadConnections = () => {
+    const allUsers =
+      JSON.parse(localStorage.getItem("hireon_users")) || [];
+
+    const current = allUsers.find(
+      (u) => u.email === user.email
+    );
+
+    let list = current?.connections || [];
+
+    // 🧹 Clean data
+    const cleaned = list.filter(
+      (c, index, self) =>
+        c.email &&                       // must have email
+        c.email !== user.email &&        // no self
+        index ===
+          self.findIndex(
+            (x) => x.email === c.email
+          )
+    );
+
+    setConnections(cleaned);
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    loadConnections();
+  }, [user]);
 
   return (
     <div style={{ padding: 20 }}>
       <h2>My Connections</h2>
 
-      {connections.length === 0 && <p>No connections yet</p>}
+      {connections.length === 0 && (
+        <p>No connections yet</p>
+      )}
 
       {connections.map((c) => (
         <div
-          key={`${c.email}-${c.name}`}
+          key={c.email}
           style={{
             marginBottom: 8,
             padding: 8,
@@ -105,7 +165,10 @@ export default function Connections() {
             borderRadius: 6,
           }}
         >
-          {c.name}
+          <strong>{c.name || c.email}</strong>
+          <div style={{ fontSize: 12, opacity: 0.7 }}>
+            {c.role || "User"}
+          </div>
         </div>
       ))}
     </div>

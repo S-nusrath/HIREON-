@@ -330,42 +330,70 @@ export default function Jobs() {
 
   const { user, login } = useAuth();
 
+  // ✅ Fake Jobs Data
   const jobs = [
     {
       id: 1,
-      title: "Frontend Intern",
-      company: "Startup Labs",
-      location: "Remote"
+      title: "Frontend Developer",
+      company: "Google",
+      location: "Bangalore",
+      type: "Full Time",
+      salary: "12 LPA",
     },
     {
       id: 2,
-      title: "React Developer",
-      company: "TechNova",
-      location: "Bengaluru"
-    }
+      title: "Backend Developer",
+      company: "Amazon",
+      location: "Hyderabad",
+      type: "Full Time",
+      salary: "14 LPA",
+    },
+    {
+      id: 3,
+      title: "MERN Stack Intern",
+      company: "Flipkart",
+      location: "Remote",
+      type: "Internship",
+      salary: "15k / month",
+    },
+    {
+      id: 4,
+      title: "Java Developer",
+      company: "TCS",
+      location: "Chennai",
+      type: "Full Time",
+      salary: "6 LPA",
+    },
+    {
+      id: 5,
+      title: "Python Developer",
+      company: "Infosys",
+      location: "Pune",
+      type: "Full Time",
+      salary: "7 LPA",
+    },
   ];
 
+  // ✅ Apply Job
   const applyJob = (job) => {
 
-    // Prevent duplicate apply
     const alreadyApplied =
       user?.appliedJobs?.some(j => j.id === job.id);
 
     if (alreadyApplied) {
-      alert("Already applied");
+      alert("Already applied ❌");
       return;
     }
 
-    // Create updated user
     const updatedUser = {
       ...user,
-      appliedJobs: [...(user.appliedJobs || []), job]
+      appliedJobs: [...(user.appliedJobs || []), job],
     };
 
-    // Update auth state
+    // Update Auth State
     login(updatedUser);
 
-    // Update localStorage users
+    // Update user inside hireon_users
     const allUsers =
       JSON.parse(localStorage.getItem("hireon_users")) || [];
 
@@ -389,15 +417,15 @@ export default function Jobs() {
         <div
           key={job.id}
           style={{
-            background: "#111",
-            padding: 20,
-            marginBottom: 15,
-            borderRadius: 10,
-            color: "white"
+            border: "1px solid #ccc",
+            padding: 15,
+            marginBottom: 12,
+            borderRadius: 8,
           }}
         >
-          <h4>{job.title}</h4>
+          <h3>{job.title}</h3>
           <p>{job.company} • {job.location}</p>
+          <p>{job.type} | {job.salary}</p>
 
           <button onClick={() => applyJob(job)}>
             Apply

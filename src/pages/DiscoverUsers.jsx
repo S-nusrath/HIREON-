@@ -314,6 +314,118 @@
 //     </div>
 //   );
 // }
+// import { useEffect, useState } from "react";
+// import { useAuth } from "../context/AuthContext";
+
+// export default function DiscoverUsers() {
+//   const { user } = useAuth();
+//   const [users, setUsers] = useState([]);
+
+//   // 🔍 Get only connectable people
+//   const getConnectableUsers = (currentUser) => {
+//     const allUsers = JSON.parse(localStorage.getItem("hireon_users")) || [];
+
+//     return allUsers.filter((u) => {
+//       // ❌ exclude self
+//       if (u.email === currentUser.email) return false;
+
+//       const connections = currentUser.connections || [];
+//       const requests = currentUser.requests || [];
+
+//       // ❌ already connected
+//       const alreadyConnected = connections.some(
+//         (c) => c.email === u.email
+//       );
+
+//       // ❌ request already received from this user
+//       const requestAlreadyExists = requests.some(
+//         (r) => r.email === u.email
+//       );
+
+//       return !alreadyConnected && !requestAlreadyExists;
+//     });
+//   };
+
+//   useEffect(() => {
+//     if (!user) return;
+
+//     const connectableUsers = getConnectableUsers(user);
+//     setUsers(connectableUsers);
+//   }, [user]);
+
+//   const sendRequest = (targetUser) => {
+//     const allUsers = JSON.parse(localStorage.getItem("hireon_users")) || [];
+
+//     const updatedUsers = allUsers.map((u) => {
+//       if (u.email === targetUser.email) {
+//         const requests = u.requests || [];
+
+//         // 🚫 prevent duplicate request
+//         const alreadySent = requests.some(
+//           (r) => r.email === user.email
+//         );
+//         if (alreadySent) return u;
+
+//         return {
+//           ...u,
+//           requests: [
+//             ...requests,
+//             {
+//               name: user.name,
+//               email: user.email,
+//               role: user.role,
+//             },
+//           ],
+//         };
+//       }
+//       return u;
+//     });
+
+//     localStorage.setItem("hireon_users", JSON.stringify(updatedUsers));
+//     alert("Connection request sent ✅");
+
+//     // refresh list after request
+//     setUsers((prev) =>
+//       prev.filter((u) => u.email !== targetUser.email)
+//     );
+//   };
+
+//   return (
+//     <div style={{ padding: 20 }}>
+//       <h2>Discover People</h2>
+
+//       {users.length === 0 && (
+//         <p>No people available to connect right now</p>
+//       )}
+
+//       {users.map((u) => (
+//         <div
+//           key={u.email}
+//           style={{
+//             display: "flex",
+//             justifyContent: "space-between",
+//             alignItems: "center",
+//             marginBottom: 10,
+//             padding: 10,
+//             border: "1px solid #333",
+//             borderRadius: 6,
+//           }}
+//         >
+//           <div>
+//             <strong>{u.name}</strong>
+//             <div style={{ fontSize: 12, opacity: 0.7 }}>
+//               {u.role}
+//             </div>
+//           </div>
+
+//           <button onClick={() => sendRequest(u)}>
+//             Connect
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -321,49 +433,74 @@ export default function DiscoverUsers() {
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
 
-  // 🔍 Get only connectable people
-  const getConnectableUsers = (currentUser) => {
-    const allUsers = JSON.parse(localStorage.getItem("hireon_users")) || [];
+  // 🔁 Ensure user exists inside hireon_users
+  const syncUserToStorage = () => {
+    const allUsers =
+      JSON.parse(localStorage.getItem("hireon_users")) || [];
+
+    const exists = allUsers.some(
+      (u) => u.email === user.email
+    );
+
+    if (!exists) {
+      allUsers.push({
+        ...user,
+        connections: [],
+        requests: [],
+      });
+
+      localStorage.setItem(
+        "hireon_users",
+        JSON.stringify(allUsers)
+      );
+    }
+  };
+
+  // 🔍 Get connectable users
+  const getConnectableUsers = () => {
+    const allUsers =
+      JSON.parse(localStorage.getItem("hireon_users")) || [];
 
     return allUsers.filter((u) => {
-      // ❌ exclude self
-      if (u.email === currentUser.email) return false;
+      if (u.email === user.email) return false; // remove self
 
-      const connections = currentUser.connections || [];
-      const requests = currentUser.requests || [];
+      const connections = user.connections || [];
+      const requests = user.requests || [];
 
-      // ❌ already connected
       const alreadyConnected = connections.some(
         (c) => c.email === u.email
       );
 
-      // ❌ request already received from this user
-      const requestAlreadyExists = requests.some(
+      const requestExists = requests.some(
         (r) => r.email === u.email
       );
 
-      return !alreadyConnected && !requestAlreadyExists;
+      return !alreadyConnected && !requestExists;
     });
   };
 
   useEffect(() => {
     if (!user) return;
 
-    const connectableUsers = getConnectableUsers(user);
-    setUsers(connectableUsers);
+    syncUserToStorage();
+
+    const connectable = getConnectableUsers();
+    setUsers(connectable);
   }, [user]);
 
+  // 📤 Send Request
   const sendRequest = (targetUser) => {
-    const allUsers = JSON.parse(localStorage.getItem("hireon_users")) || [];
+    const allUsers =
+      JSON.parse(localStorage.getItem("hireon_users")) || [];
 
-    const updatedUsers = allUsers.map((u) => {
+    const updated = allUsers.map((u) => {
       if (u.email === targetUser.email) {
         const requests = u.requests || [];
 
-        // 🚫 prevent duplicate request
         const alreadySent = requests.some(
           (r) => r.email === user.email
         );
+
         if (alreadySent) return u;
 
         return {
@@ -381,10 +518,13 @@ export default function DiscoverUsers() {
       return u;
     });
 
-    localStorage.setItem("hireon_users", JSON.stringify(updatedUsers));
+    localStorage.setItem(
+      "hireon_users",
+      JSON.stringify(updated)
+    );
+
     alert("Connection request sent ✅");
 
-    // refresh list after request
     setUsers((prev) =>
       prev.filter((u) => u.email !== targetUser.email)
     );
@@ -395,7 +535,7 @@ export default function DiscoverUsers() {
       <h2>Discover People</h2>
 
       {users.length === 0 && (
-        <p>No people available to connect right now</p>
+        <p>No people available to connect</p>
       )}
 
       {users.map((u) => (
@@ -418,9 +558,12 @@ export default function DiscoverUsers() {
             </div>
           </div>
 
-          <button onClick={() => sendRequest(u)}>
-            Connect
-          </button>
+          {/* 🚫 No self connect */}
+          {u.email !== user.email && (
+            <button onClick={() => sendRequest(u)}>
+              Connect
+            </button>
+          )}
         </div>
       ))}
     </div>

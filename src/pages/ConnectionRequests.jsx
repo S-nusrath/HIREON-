@@ -315,6 +315,115 @@ export default ConnectionRequests;
 //     </div>
 //   );
 // }
+// import { useEffect, useState } from "react";
+// import { useAuth } from "../context/AuthContext";
+
+// export default function ConnectionRequests() {
+//   const { user, login } = useAuth();
+//   const [requests, setRequests] = useState([]);
+
+//   // Load & Deduplicate Requests
+//   useEffect(() => {
+//     if (!user) return;
+
+//     const uniqueRequests = (user.requests || []).filter(
+//       (req, index, self) =>
+//         index === self.findIndex((r) => r.email === req.email)
+//     );
+
+//     setRequests(uniqueRequests);
+//   }, [user]);
+
+//   // Accept Request
+//   const acceptRequest = (requestUser) => {
+//     const allUsers =
+//       JSON.parse(localStorage.getItem("hireon_users")) || [];
+
+//     const updatedUsers = allUsers.map((u) => {
+//       // Logged in user
+//       if (u.email === user.email) {
+//         const connections = u.connections || [];
+//         const requests = u.requests || [];
+
+//         const alreadyConnected = connections.some(
+//           (c) => c.email === requestUser.email
+//         );
+
+//         return {
+//           ...u,
+//           connections: alreadyConnected
+//             ? connections
+//             : [...connections, requestUser],
+//           requests: requests.filter(
+//             (r) => r.email !== requestUser.email
+//           ),
+//         };
+//       }
+
+//       // Request sender user
+//       if (u.email === requestUser.email) {
+//         const connections = u.connections || [];
+
+//         const alreadyConnected = connections.some(
+//           (c) => c.email === user.email
+//         );
+
+//         return {
+//           ...u,
+//           connections: alreadyConnected
+//             ? connections
+//             : [...connections, user],
+//         };
+//       }
+
+//       return u;
+//     });
+
+//     // Save
+//     localStorage.setItem(
+//       "hireon_users",
+//       JSON.stringify(updatedUsers)
+//     );
+
+//     // Update auth user
+//     const updatedCurrentUser = updatedUsers.find(
+//       (u) => u.email === user.email
+//     );
+
+//     login(updatedCurrentUser);
+
+//     // Instantly update UI
+//     setRequests((prev) =>
+//       prev.filter((r) => r.email !== requestUser.email)
+//     );
+
+//     alert("Connection accepted 🎉");
+//   };
+
+//   return (
+//     <div style={{ padding: 20 }}>
+//       <h2>Connection Requests</h2>
+
+//       {requests.length === 0 && <p>No requests</p>}
+
+//       {requests.map((r) => (
+//         <div
+//           key={`${r.email}-${r.name}`}
+//           style={{
+//             display: "flex",
+//             gap: 10,
+//             marginBottom: 8,
+//           }}
+//         >
+//           <strong>{r.name}</strong>
+//           <button onClick={() => acceptRequest(r)}>
+//             Accept
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -322,80 +431,80 @@ export default function ConnectionRequests() {
   const { user, login } = useAuth();
   const [requests, setRequests] = useState([]);
 
-  // Load & Deduplicate Requests
-  useEffect(() => {
-    if (!user) return;
+  // 🔁 Load requests from storage
+  const loadRequests = () => {
+    const allUsers =
+      JSON.parse(localStorage.getItem("hireon_users")) || [];
 
-    const uniqueRequests = (user.requests || []).filter(
-      (req, index, self) =>
-        index === self.findIndex((r) => r.email === req.email)
+    const current = allUsers.find(
+      (u) => u.email === user.email
     );
 
-    setRequests(uniqueRequests);
+    const unique =
+      (current?.requests || []).filter(
+        (req, index, self) =>
+          index ===
+          self.findIndex((r) => r.email === req.email)
+      );
+
+    setRequests(unique);
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    loadRequests();
   }, [user]);
 
-  // Accept Request
+  // ✅ Accept Request
   const acceptRequest = (requestUser) => {
     const allUsers =
       JSON.parse(localStorage.getItem("hireon_users")) || [];
 
     const updatedUsers = allUsers.map((u) => {
-      // Logged in user
+      // Current user
       if (u.email === user.email) {
-        const connections = u.connections || [];
-        const requests = u.requests || [];
-
-        const alreadyConnected = connections.some(
-          (c) => c.email === requestUser.email
-        );
-
         return {
           ...u,
-          connections: alreadyConnected
-            ? connections
-            : [...connections, requestUser],
-          requests: requests.filter(
+          connections: [
+            ...(u.connections || []),
+            requestUser,
+          ],
+          requests: (u.requests || []).filter(
             (r) => r.email !== requestUser.email
           ),
         };
       }
 
-      // Request sender user
+      // Sender
       if (u.email === requestUser.email) {
-        const connections = u.connections || [];
-
-        const alreadyConnected = connections.some(
-          (c) => c.email === user.email
-        );
-
         return {
           ...u,
-          connections: alreadyConnected
-            ? connections
-            : [...connections, user],
+          connections: [
+            ...(u.connections || []),
+            {
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            },
+          ],
         };
       }
 
       return u;
     });
 
-    // Save
     localStorage.setItem(
       "hireon_users",
       JSON.stringify(updatedUsers)
     );
 
-    // Update auth user
-    const updatedCurrentUser = updatedUsers.find(
+    const updatedCurrent = updatedUsers.find(
       (u) => u.email === user.email
     );
 
-    login(updatedCurrentUser);
+    login(updatedCurrent);
 
-    // Instantly update UI
-    setRequests((prev) =>
-      prev.filter((r) => r.email !== requestUser.email)
-    );
+    loadRequests();
 
     alert("Connection accepted 🎉");
   };
@@ -408,7 +517,7 @@ export default function ConnectionRequests() {
 
       {requests.map((r) => (
         <div
-          key={`${r.email}-${r.name}`}
+          key={r.email}
           style={{
             display: "flex",
             gap: 10,
