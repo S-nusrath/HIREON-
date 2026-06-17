@@ -1,0 +1,228 @@
+// package com.hireon.hireon.controller;
+
+// import com.hireon.hireon.dto.LoginRequest;
+// import com.hireon.hireon.service.AuthService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// import java.util.Map;
+
+// @RestController
+// @RequestMapping("/api/auth")
+// @CrossOrigin(origins = "http://localhost:5173")
+// public class AuthController {
+
+//     @Autowired
+//     private AuthService authService;
+
+//     // @PostMapping("/login")
+//     // public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+//     //     Map<String, String> result = authService.login(request);
+
+//     //     return ResponseEntity.ok(result);
+//     // }
+//     @PostMapping("/register")
+// public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
+
+//     Map<String, String> result = authService.register(request);
+
+//     return ResponseEntity.ok(result);
+// }
+// }
+// package com.hireon.hireon.controller;
+
+// import com.hireon.hireon.dto.LoginRequest;
+// import com.hireon.hireon.service.AuthService;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// import java.util.Map;
+
+// @RestController
+// @RequestMapping("/api/auth")
+// @CrossOrigin(origins = "http://localhost:5173")
+// public class AuthController {
+
+//     @Autowired
+//     private AuthService authService;
+
+//     // ✅ REGISTER API (FIXED)
+//     @PostMapping("/register")
+//     public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
+//         Map<String, String> result = authService.register(request);
+//         return ResponseEntity.ok(result);
+//     }
+
+//     // ✅ LOGIN API (UNCOMMENTED + READY)
+//     @PostMapping("/login")
+//     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+//         Map<String, String> result = authService.login(request);
+//         return ResponseEntity.ok(result);
+//     }
+
+//     public AuthService getAuthService() {
+//         return authService;
+//     }
+
+//     public void setAuthService(AuthService authService) {
+//         this.authService = authService;
+//     }
+// }
+package com.hireon.hireon.controller;
+
+import com.hireon.hireon.dto.LoginRequest;
+import com.hireon.hireon.service.AuthService;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
+public class AuthController {
+
+    private final AuthService authService;
+
+    // ✅ Constructor Injection (Best Practice)
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    // ================= REGISTER =================
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
+        Map<String, String> result = authService.register(request);
+        return ResponseEntity.ok(result);
+    }
+
+    // ================= LOGIN =================
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Map<String, String> result = authService.login(request);
+        return ResponseEntity.ok(result);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // package com.hireon.hireon.controller;
+
+// // import com.hireon.hireon.dto.LoginRequest;
+// // import org.springframework.web.bind.annotation.*;
+
+// // @RestController
+// // @RequestMapping("/api/auth")
+// // public class AuthController {
+
+// //     @PostMapping("/login")
+// //     public String login(@RequestBody LoginRequest request) {
+
+// //         System.out.println(request.getEmail());
+// //         System.out.println(request.getPassword());
+// //          System.out.println("Role: " + request.getRole());
+
+// //         return "Login Success";
+// //     }
+// // }
+
+// package com.hireon.hireon.controller;
+
+// import com.hireon.hireon.dto.LoginRequest;
+// import com.hireon.hireon.service.AuthService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
+
+// @RestController
+// @RequestMapping("/api/auth")
+// public class AuthController {
+
+//     @Autowired
+//     private AuthService authService;
+
+//     @PostMapping("/login")
+//     public String login(@RequestBody LoginRequest request) {
+//         return authService.login(request);
+//     }
+// }
+
+
+
+
+
+
+
+
+// package com.hireon.hireon.controller;
+
+// import com.hireon.hireon.dto.LoginRequest;
+// import com.hireon.hireon.service.AuthService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// import java.util.Map;
+
+// @RestController
+// @RequestMapping("/api/auth")
+// public class AuthController {
+
+//     @Autowired
+//     private AuthService authService;
+
+//     @PostMapping("/login")
+//     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+//         try {
+//             String token = authService.login(request);
+
+//             return ResponseEntity.ok(Map.of(
+//                     "token", token,
+//                     "email", request.getEmail()
+//             ));
+
+//         } catch (RuntimeException e) {
+//             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                     .body(Map.of("message", e.getMessage()));
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
